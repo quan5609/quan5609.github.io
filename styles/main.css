@@ -644,8 +644,8 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: white;
     color: var(--primary-color);
@@ -655,7 +655,7 @@ section {
 }
 
 .social-link:hover {
-    background: var(--primary-color);
+    /* background: var(--primary-color); */
     color: white;
     transform: translateY(-5px);
 }
