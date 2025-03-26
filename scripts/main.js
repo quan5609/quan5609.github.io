@@ -127,26 +127,26 @@ document.addEventListener("DOMContentLoaded", function () {
   // }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const publications = document.querySelectorAll(".publication-item");
-  const loadMoreButton = document.getElementById("load-more-pubs");
-  const maxVisible = 4;
+// document.addEventListener("DOMContentLoaded", function () {
+//   const publications = document.querySelectorAll(".publication-item");
+//   const loadMoreButton = document.getElementById("load-more-pubs");
+//   const maxVisible = 4;
 
-  // Initially hide publications beyond the first 4
-  if (publications.length > maxVisible) {
-    publications.forEach((pub, index) => {
-      if (index >= maxVisible) {
-        pub.style.display = "none";
-      }
-    });
-    loadMoreButton.style.display = "block"; // Show the "Load More" button
-  }
+//   // Initially hide publications beyond the first 4
+//   if (publications.length > maxVisible) {
+//     publications.forEach((pub, index) => {
+//       if (index >= maxVisible) {
+//         pub.style.display = "none";
+//       }
+//     });
+//     loadMoreButton.style.display = "block"; // Show the "Load More" button
+//   }
 
-  // Add click event to load more publications
-  loadMoreButton.addEventListener("click", function () {
-    publications.forEach((pub) => {
-      pub.style.display = "block"; // Show all publications
-    });
-    loadMoreButton.style.display = "none"; // Hide the button after loading
-  });
-});
+//   // Add click event to load more publications
+//   loadMoreButton.addEventListener("click", function () {
+//     publications.forEach((pub) => {
+//       pub.style.display = "block"; // Show all publications
+//     });
+//     loadMoreButton.style.display = "none"; // Hide the button after loading
+//   });
+// });
