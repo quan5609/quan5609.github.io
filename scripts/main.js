@@ -60,9 +60,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
       publicationItems.forEach((item) => {
         if (filter === "all" || item.getAttribute("data-category") === filter) {
-          item.style.display = "block";
+          item.style.display = "block"; // Ensure item is visible
+          setTimeout(() => {
+            item.classList.remove("hidden"); // Trigger fade-in transition
+          }, 10); // Slight delay to ensure display is applied
         } else {
-          item.style.display = "none";
+          item.classList.add("hidden"); // Trigger fade-out transition
+          setTimeout(() => {
+            item.style.display = "none"; // Set display to none after transition
+          }, 300); // Match the CSS transition duration
         }
       });
     });
