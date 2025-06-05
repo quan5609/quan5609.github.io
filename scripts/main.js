@@ -150,3 +150,48 @@ document.addEventListener("DOMContentLoaded", function () {
 //     loadMoreButton.style.display = "none"; // Hide the button after loading
 //   });
 // });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const citeLinks = document.querySelectorAll(".cite-link");
+
+  citeLinks.forEach((citeLink) => {
+    citeLink.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Get the citation text from the data attribute
+      const citationText = citeLink.getAttribute("data-citation");
+
+      // Check if the citation is already displayed
+      const existingCitation = citeLink
+        .closest(".publication-content")
+        .querySelector(".citation-text");
+      if (existingCitation) {
+        existingCitation.remove(); // Remove the citation if it already exists
+        return;
+      }
+
+      // Create a new citation element
+      const citationElement = document.createElement("pre");
+      citationElement.className = "citation-text";
+
+      // Wrap each line of the citation text in a <code> element
+      const lines = citationText.split("\\n"); // Split the text by \n
+      lines.forEach((line, index) => {
+        const codeElement = document.createElement("code");
+        codeElement.textContent = line; // Set the text content for each line
+        codeElement.style.opacity = "0"; // Initially hidden
+        codeElement.style.transition = "opacity 0.1s ease"; // Much faster transition
+        citationElement.appendChild(codeElement);
+        citationElement.appendChild(document.createElement("br")); // Add a line break
+
+        // Gradually show each line with a reduced delay
+        setTimeout(() => {
+          codeElement.style.opacity = "1"; // Make the line visible
+        }, index * 50); // Much faster appearance
+      });
+
+      // Insert the citation element below the publication actions
+      citeLink.closest(".publication-content").appendChild(citationElement);
+    });
+  });
+});
