@@ -1,341 +1,462 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minh-Quan Viet Bui | Computer Vision Researcher</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Minh-Quan Viet Bui is a Ph.D. researcher at KAIST VIC Lab working on neural rendering and dynamic 3D reconstruction from casually captured images and videos.">
+    <meta name="author" content="Minh-Quan Viet Bui">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Minh-Quan Viet Bui | Computer Vision Researcher">
+    <meta property="og:description" content="Ph.D. researcher at KAIST VIC Lab. Neural rendering and dynamic 3D reconstruction.">
+    <meta property="og:image" content="images/profile.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <meta name="theme-color" id="theme-color-meta" content="#0b0b0d">
+
+    <!--
+      Font loading note: this is a build-free static site (GitHub Pages), so there is
+      no next/font or bundler available. Google Fonts CSS API + preconnect + font-display:swap
+      is the standard honest approach for this deploy target.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Phosphor Icons (single icon family for the whole page) -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
     <link rel="stylesheet" href="styles/main.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Set theme before paint to avoid a flash of the wrong mode -->
+    <script>
+        (function () {
+            try {
+                var stored = localStorage.getItem("theme");
+                var theme = stored || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+                document.documentElement.setAttribute("data-theme", theme);
+            } catch (e) { /* default stays dark */ }
+        })();
+    </script>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <h1 class="logo"><a href="#intro">Minh-Quan Viet Bui</a></h1>
-                <nav class="nav">
-                    <ul>
-                        <li><a href="#about">About</a></li>
-                        <!-- <li><a href="#research">Research</a></li> -->
-                        <li><a href="#publications">Publications</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
-                <button class="mobile-menu-btn" aria-label="Toggle menu">
-                    <i class="fas fa-bars"></i>
+    <span id="top-sentinel" aria-hidden="true"></span>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <header class="site-header" id="site-header">
+        <div class="wrap header-inner">
+            <a href="#intro" class="brand">
+                <span class="brand-mark">MQ</span>
+                <span class="brand-name">Minh-Quan Viet Bui</span>
+            </a>
+
+            <nav class="nav" id="nav" aria-label="Primary">
+                <ul class="nav-list">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#cv">CV</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">
+                    <i class="ph ph-moon theme-icon-dark" aria-hidden="true"></i>
+                    <i class="ph ph-sun theme-icon-light" aria-hidden="true"></i>
+                </button>
+                <button class="icon-btn menu-toggle" id="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav">
+                    <i class="ph ph-list" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <section id="intro" class="hero">
-        <div class="container">
-            <div class="hero-content">
+    <main id="main">
+        <!-- ===================== HERO ===================== -->
+        <section id="intro" class="hero">
+            <div class="hero-glow" aria-hidden="true"></div>
+            <div class="wrap">
+                <div class="hero-grid">
                 <div class="hero-text">
-                    <h2>My Research Topics: <span class="highlight">Computer Vision</span> and <span class="highlight">Dynamic 3D World Modeling</span></h2>
-                    <p>Computer Vision Researcher | Ph.D Student</p>
-                    <div class="hero-btns">
-                        <a href="#research" class="btn btn-primary">Explore My Research</a>
-                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                    <p class="eyebrow" data-reveal>Ph.D. Researcher · KAIST VIC Lab</p>
+                    <h1 class="hero-title" data-reveal>
+                        Minh-Quan<br>Viet <span class="title-accent">Bui</span>
+                    </h1>
+                    <p class="hero-lead" data-reveal>
+                        I develop methods for neural rendering and dynamic 3D reconstruction
+                        from casually captured images and videos.
+                    </p>
+                    <div class="hero-actions" data-reveal>
+                        <a href="assets/Minh-Quan_Viet_Bui_CV.pdf" class="btn btn-primary" download>
+                            <i class="ph ph-download-simple" aria-hidden="true"></i> Download CV
+                        </a>
+                        <a href="#publications" class="btn btn-ghost">View publications</a>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <img src="images/profile.jpg" alt="Minh-Quan" class="profile-img">
-                    <div class="decoration-circle"></div>
+
+                <div class="hero-portrait" data-reveal>
+                    <div class="portrait-frame">
+                        <img src="images/profile.jpg" alt="Portrait of Minh-Quan Viet Bui" class="portrait-img" width="420" height="500">
+                    </div>
+                    <div class="portrait-tag">
+                        <span class="dot-live" aria-hidden="true"></span>
+                        <span>Open to internship/collaboration</span>
+                    </div>
+                </div>
+                </div>
+
+                <div id="about" class="about-block">
+                <div class="about-grid">
+                    <div class="about-main" data-reveal>
+                        <p class="about-bio">
+                            I am a Ph.D. student in Electrical Engineering at
+                            <a href="https://www.viclab.kaist.ac.kr/">VIC Lab</a>, KAIST, advised by
+                            <a href="https://scholar.google.com/citations?user=bGXte_4AAAAJ&hl=vi&oi=ao">Prof. Munchurl Kim</a>.
+                            I received my bachelor's degree from Ho Chi Minh City University of Technology - VNU,
+                            working with <a href="https://scholar.google.com/citations?user=xV7uHJgAAAAJ&hl=en">Dr. Duc Dung Nguyen</a>.
+                        </p>
+                        <p class="about-bio">
+                            My research focuses on computer vision, neural rendering, and dynamic 3D world
+                            reconstruction from casually captured images and videos.
+                        </p>
+
+                        <div class="timeline">
+                            <h3 class="block-label">Education</h3>
+                            <ol class="timeline-list">
+                                <li class="timeline-item">
+                                    <span class="timeline-year">2023 - Present</span>
+                                    <span class="timeline-role">Ph.D. in Electrical Engineering</span>
+                                    <span class="timeline-org">KAIST</span>
+                                </li>
+                                <li class="timeline-item">
+                                    <span class="timeline-year">2022 - 2023</span>
+                                    <span class="timeline-role">M.Sc. in Electrical Engineering</span>
+                                    <span class="timeline-org">KAIST</span>
+                                </li>
+                                <li class="timeline-item">
+                                    <span class="timeline-year">2017 - 2021</span>
+                                    <span class="timeline-role">B.Sc. in Computer Science</span>
+                                    <span class="timeline-org">Ho Chi Minh City University of Technology - VNU</span>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <aside class="about-side" data-reveal>
+                        <div class="side-card">
+                            <h3 class="block-label">Published at</h3>
+                            <div class="chip-row">
+                                <span class="chip chip-strong">IEEE TPAMI</span>
+                                <span class="chip">CVPR</span>
+                                <span class="chip">ECCV</span>
+                                <span class="chip">AAAI</span>
+                                <span class="chip">IEEE Access</span>
+                            </div>
+                        </div>
+
+                        <div class="side-card">
+                            <h3 class="block-label">Research interests</h3>
+                            <div class="chip-row">
+                                <span class="chip">Computer Vision</span>
+                                <span class="chip">2D / 3D Reconstruction</span>
+                                <span class="chip">Neural Rendering</span>
+                                <span class="chip">Deep Learning</span>
+                                <span class="chip">Computer Graphics</span>
+                            </div>
+                        </div>
+
+                        <div class="side-card">
+                            <h3 class="block-label">Technical skills</h3>
+                            <div class="chip-row">
+                                <span class="chip">Python</span>
+                                <span class="chip">PyTorch / JAX / TensorFlow</span>
+                                <span class="chip">CUDA / C++</span>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="about" class="section about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>I am a Ph.D. student in Electrical Engineering at <a href="https://www.viclab.kaist.ac.kr/">VIC Lab</a>, KAIST, under the supervision of <a href="https://scholar.google.com/citations?user=bGXte_4AAAAJ&hl=vi&oi=ao"> Prof. Munchurl Kim</a>. Before that I received my bachelor's degree from Ho Chi Minh City University of Technology-VNU, working with <a href="https://scholar.google.com/citations?user=xV7uHJgAAAAJ&hl=en"> Dr. Duc Dung Nguyen</a>. </p>
-                    <p>My current research focuses on computer vision, neural rendering, and dynamic 3D world reconstruction from casually captured images and videos.</p>
-                    <div class="education">
-                        <h3>Education</h3>
-                        <ul>
-                            <li>
-                                <strong>Ph.D. in Electrical Engineering</strong>
-                                <span>KAIST, 2023-Present</span>
-                            </li>
-                            <li>
-                                <strong>M.Sc. in Electrical Engineering</strong>
-                                <span>KAIST, 2022-2023</span>
-                            </li>
-                            <li>
-                                <strong>B.Sc. in Computer Science</strong>
-                                <span>Ho Chi Minh City University of Technology - VNU, 2017-2021</span>
-                            </li>
-                        </ul>
+        <!-- ===================== PUBLICATIONS ===================== -->
+        <section id="publications" class="section publications">
+            <div class="wrap">
+                <header class="section-head section-head--row" data-reveal>
+                    <h2 class="section-title">Publications</h2>
+                    <div class="publication-filters" role="group" aria-label="Filter publications">
+                        <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+                        <button class="filter-btn" data-filter="conference" aria-pressed="false">Conference</button>
+                        <button class="filter-btn" data-filter="journal" aria-pressed="false">Journal</button>
                     </div>
+                </header>
+
+                <div class="publication-list">
+
+                    <!-- AirSplat -->
+                    <article class="pub-card" data-category="conference" data-reveal>
+                        <div class="pub-media pub-media--mono" data-hue="0">
+                            <span class="pub-mono-name">AirSplat</span>
+                            <span class="pub-mono-venue">ECCV 2026</span>
+                        </div>
+                        <div class="publication-content pub-body">
+                            <div class="pub-tags">
+                                <span class="pub-badge pub-badge--conf">Conference</span>
+                                <span class="pub-venue">ECCV 2026</span>
+                            </div>
+                            <h3 class="pub-title">AirSplat: Alignment and Rating for Robust Feed-Forward 3D Gaussian Splatting</h3>
+                            <p class="pub-authors"><b>Minh-Quan Viet Bui*</b>, Jaeho Moon*, Munchurl Kim</p>
+                            <div class="publication-actions pub-actions">
+                                <a href="https://arxiv.org/pdf/2603.25129" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-file-pdf" aria-hidden="true"></i> PDF</a>
+                                <a href="https://kaist-viclab.github.io/airsplat-site/" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-globe" aria-hidden="true"></i> Project</a>
+                                <button type="button" class="pub-link cite-link" aria-expanded="false" data-citation="@InProceedings{bui2026airsplat,\n  author    = {Minh-Quan Viet Bui and Jaeho Moon and Munchurl Kim},\n  title     = {AirSplat: Alignment and Rating for Robust Feed-Forward 3D Gaussian Splatting},\n  booktitle = {ECCV},\n  year      = {2026}\n}"><i class="ph ph-quotes" aria-hidden="true"></i> Cite</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- EcoSplat -->
+                    <article class="pub-card" data-category="conference" data-reveal>
+                        <div class="pub-media pub-media--mono" data-hue="1">
+                            <span class="pub-mono-name">EcoSplat</span>
+                            <span class="pub-mono-venue">CVPR 2026</span>
+                        </div>
+                        <div class="publication-content pub-body">
+                            <div class="pub-tags">
+                                <span class="pub-badge pub-badge--conf">Conference</span>
+                                <span class="pub-venue">CVPR 2026</span>
+                                <span class="pub-flag">Highlight</span>
+                            </div>
+                            <h3 class="pub-title">EcoSplat: Efficiency-controllable Feed-forward 3D Gaussian Splatting from Multi-view Images</h3>
+                            <p class="pub-authors">Jongmin Park*, <b>Minh-Quan Viet Bui*</b>, Juan Luis Gonzalez Bello, Jaeho Moon, Jihyong Oh, Munchurl Kim</p>
+                            <div class="publication-actions pub-actions">
+                                <a href="https://arxiv.org/pdf/2512.18692" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-file-pdf" aria-hidden="true"></i> PDF</a>
+                                <button type="button" class="pub-link cite-link" aria-expanded="false" data-citation="@InProceedings{park2026ecosplat,\n  author    = {Jongmin Park and Minh-Quan Viet Bui and Juan Luis Gonzalez Bello and Jaeho Moon and Jihyong Oh and Munchurl Kim},\n  title     = {EcoSplat: Efficiency-controllable Feed-forward 3D Gaussian Splatting from Multi-view Images},\n  booktitle = {Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR)},\n  year      = {2026}\n}"><i class="ph ph-quotes" aria-hidden="true"></i> Cite</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- MoBGS -->
+                    <article class="pub-card" data-category="conference" data-reveal>
+                        <div class="pub-media">
+                            <img src="images/mobgs.png" alt="MoBGS results" loading="lazy">
+                        </div>
+                        <div class="publication-content pub-body">
+                            <div class="pub-tags">
+                                <span class="pub-badge pub-badge--conf">Conference</span>
+                                <span class="pub-venue">AAAI 2026</span>
+                            </div>
+                            <h3 class="pub-title">MoBGS: Motion Deblurring Dynamic 3D Gaussian Splatting for Blurry Monocular Video</h3>
+                            <p class="pub-authors"><b>Minh-Quan Viet Bui*</b>, Jongmin Park*, Juan Luis Gonzalez Bello, Jaeho Moon, Jihyong Oh, Munchurl Kim</p>
+                            <div class="publication-actions pub-actions">
+                                <a href="https://arxiv.org/pdf/2504.15122" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-file-pdf" aria-hidden="true"></i> PDF</a>
+                                <button type="button" class="pub-link cite-link" aria-expanded="false" data-citation="@InProceedings{bui2025mobgsmotiondeblurringdynamic,\n  title={MoBGS: Motion Deblurring Dynamic 3D Gaussian Splatting for Blurry Monocular Video},\n  author={Minh-Quan Viet Bui and Jongmin Park and Juan Luis Gonzalez Bello and Jaeho Moon and Jihyong Oh and Munchurl Kim},\n  year={2026},\n  booktitle = {AAAI}\n}"><i class="ph ph-quotes" aria-hidden="true"></i> Cite</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- SplineGS -->
+                    <article class="pub-card" data-category="conference" data-reveal>
+                        <div class="pub-media">
+                            <img src="images/splinegs.png" alt="SplineGS results" loading="lazy">
+                        </div>
+                        <div class="publication-content pub-body">
+                            <div class="pub-tags">
+                                <span class="pub-badge pub-badge--conf">Conference</span>
+                                <span class="pub-venue">CVPR 2025</span>
+                            </div>
+                            <h3 class="pub-title">SplineGS: Robust Motion-Adaptive Spline for Real-Time Dynamic 3D Gaussians from Monocular Video</h3>
+                            <p class="pub-authors">Jongmin Park*, <b>Minh-Quan Viet Bui*</b>, Juan Luis Gonzalez Bello, Jaeho Moon, Jihyong Oh, Munchurl Kim</p>
+                            <div class="publication-actions pub-actions">
+                                <a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Park_SplineGS_Robust_Motion-Adaptive_Spline_for_Real-Time_Dynamic_3D_Gaussians_from_CVPR_2025_paper.pdf" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-file-pdf" aria-hidden="true"></i> PDF</a>
+                                <a href="https://kaist-viclab.github.io/splinegs-site" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-globe" aria-hidden="true"></i> Project</a>
+                                <button type="button" class="pub-link cite-link" aria-expanded="false" data-citation="@InProceedings{Park_2025_CVPR,\n  author    = {Park, Jongmin and Bui, Minh-Quan Viet and Bello, Juan Luis Gonzalez and Moon, Jaeho and Oh, Jihyong and Kim, Munchurl},\n  title     = {SplineGS: Robust Motion-Adaptive Spline for Real-Time Dynamic 3D Gaussians from Monocular Video},\n  booktitle = {Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR)},\n  month     = {June},\n  year      = {2025},\n  pages     = {26866-26875}\n}"><i class="ph ph-quotes" aria-hidden="true"></i> Cite</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- MoBluRF -->
+                    <article class="pub-card" data-category="journal" data-reveal>
+                        <div class="pub-media">
+                            <img src="images/moblurf.png" alt="MoBluRF results" loading="lazy">
+                        </div>
+                        <div class="publication-content pub-body">
+                            <div class="pub-tags">
+                                <span class="pub-badge pub-badge--journal">Journal</span>
+                                <span class="pub-venue">IEEE TPAMI</span>
+                                <span class="pub-if">IF 20.8</span>
+                            </div>
+                            <h3 class="pub-title">MoBluRF: Motion Deblurring Neural Radiance Fields for Blurry Monocular Video</h3>
+                            <p class="pub-authors"><b>Minh-Quan Viet Bui*</b>, Jongmin Park*, Juan Luis Gonzalez Bello, Jaeho Moon, Jihyong Oh, Munchurl Kim</p>
+                            <div class="publication-actions pub-actions">
+                                <a href="https://ieeexplore.ieee.org/document/11017407" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-file-pdf" aria-hidden="true"></i> PDF</a>
+                                <a href="https://kaist-viclab.github.io/moblurf-site/" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-globe" aria-hidden="true"></i> Project</a>
+                                <button type="button" class="pub-link cite-link" aria-expanded="false" data-citation="@ARTICLE{11017407,\n  author={Bui, Minh-Quan Viet and Park, Jongmin and Oh, Jihyong and Kim, Munchurl},\n  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},\n  title={MoBluRF: Motion Deblurring Neural Radiance Fields for Blurry Monocular Video},\n  year={2025},\n  volume={},\n  number={},\n  pages={1-18},\n  doi={10.1109/TPAMI.2025.3574644}\n}"><i class="ph ph-quotes" aria-hidden="true"></i> Cite</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- ProNeRF -->
+                    <article class="pub-card" data-category="journal" data-reveal>
+                        <div class="pub-media">
+                            <img src="images/pronerf.png" alt="ProNeRF results" loading="lazy">
+                        </div>
+                        <div class="publication-content pub-body">
+                            <div class="pub-tags">
+                                <span class="pub-badge pub-badge--journal">Journal</span>
+                                <span class="pub-venue">IEEE Access</span>
+                                <span class="pub-if">IF 3.4</span>
+                            </div>
+                            <h3 class="pub-title">ProNeRF: Learning Efficient Projection-Aware Ray Sampling for Fine-Grained Implicit Neural Radiance Fields</h3>
+                            <p class="pub-authors">Juan Luis Gonzalez Bello*, <b>Minh-Quan Viet Bui*</b>, Munchurl Kim</p>
+                            <div class="publication-actions pub-actions">
+                                <a href="https://ieeexplore.ieee.org/document/10504815" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-file-pdf" aria-hidden="true"></i> PDF</a>
+                                <a href="https://kaist-viclab.github.io/pronerf-site/" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-globe" aria-hidden="true"></i> Project</a>
+                                <button type="button" class="pub-link cite-link" aria-expanded="false" data-citation="@ARTICLE{10504815,\n  author={Bello, Juan Luis Gonzalez and Bui, Minh-Quan Viet and Kim, Munchurl},\n  journal={IEEE Access},\n  title={ProNeRF: Learning Efficient Projection-Aware Ray Sampling for Fine-Grained Implicit Neural Radiance Fields},\n  year={2024},\n  volume={12},\n  number={},\n  pages={56799-56814},\n  doi={10.1109/ACCESS.2024.3390753}\n}"><i class="ph ph-quotes" aria-hidden="true"></i> Cite</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Transfer multi-source knowledge -->
+                    <article class="pub-card" data-category="journal" data-reveal>
+                        <div class="pub-media">
+                            <img src="images/transfer.jpg" alt="Domain adaptation depth estimation results" loading="lazy">
+                        </div>
+                        <div class="publication-content pub-body">
+                            <div class="pub-tags">
+                                <span class="pub-badge pub-badge--journal">Journal</span>
+                                <span class="pub-venue">Image and Vision Computing</span>
+                                <span class="pub-if">IF 4.2</span>
+                            </div>
+                            <h3 class="pub-title">Transfer multi-source knowledge via scale-aware online domain adaptation in depth estimation for autonomous driving</h3>
+                            <p class="pub-authors">Phan Thi Huyen Thanh*, <b>Minh-Quan Viet Bui*</b>, Duc Dung Nguyen, Tran Vu Pham, Truong Vinh Truong Duy, Natori Naotake</p>
+                            <div class="publication-actions pub-actions">
+                                <a href="https://www.sciencedirect.com/science/article/pii/S0262885623002457" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-file-pdf" aria-hidden="true"></i> PDF</a>
+                                <button type="button" class="pub-link cite-link" aria-expanded="false" data-citation="@article{THANH2024104871,\n  title = {Transfer multi-source knowledge via scale-aware online domain adaptation in depth estimation for autonomous driving},\n  journal = {Image and Vision Computing},\n  volume = {141},\n  pages = {104871},\n  year = {2024},\n  issn = {0262-8856},\n  doi = {https://doi.org/10.1016/j.imavis.2023.104871},\n  url = {https://www.sciencedirect.com/science/article/pii/S0262885623002457},\n  author = {Phan Thi Huyen Thanh and Minh Quan Viet Bui and Duc Dung Nguyen and Tran Vu Pham and Truong Vinh Truong Duy and Natori Naotake}\n}"><i class="ph ph-quotes" aria-hidden="true"></i> Cite</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- eGAC3D -->
+                    <article class="pub-card" data-category="journal" data-reveal>
+                        <div class="pub-media pub-media--mono" data-hue="2">
+                            <span class="pub-mono-name">eGAC3D</span>
+                            <span class="pub-mono-venue">PeerJ CS</span>
+                        </div>
+                        <div class="publication-content pub-body">
+                            <div class="pub-tags">
+                                <span class="pub-badge pub-badge--journal">Journal</span>
+                                <span class="pub-venue">PeerJ Computer Science</span>
+                                <span class="pub-if">IF 3.8</span>
+                            </div>
+                            <h3 class="pub-title">eGAC3D: enhancing depth adaptive convolution and depth estimation for monocular 3D object pose detection</h3>
+                            <p class="pub-authors">Duc Tuan Ngo*, <b>Minh-Quan Viet Bui*</b>, Duc Dung Nguyen, Hoang-Anh Pham</p>
+                            <div class="publication-actions pub-actions">
+                                <a href="https://peerj.com/articles/cs-1144/" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-file-pdf" aria-hidden="true"></i> PDF</a>
+                                <button type="button" class="pub-link cite-link" aria-expanded="false" data-citation="@article{Ngo2022eGAC3D,\n  author = {Ngo, Duc Tuan and Bui, Minh-Quan Viet and Nguyen, Duc Dung and Pham, Hoang-Anh},\n  title = {eGAC3D: enhancing depth adaptive convolution and depth estimation for monocular 3D object pose detection},\n  journal = {PeerJ Computer Science},\n  volume = {8},\n  pages = {e1144},\n  year = {2022},\n  doi = {10.7717/peerj-cs.1144},\n  url = {https://peerj.com/articles/cs-1144/}\n}"><i class="ph ph-quotes" aria-hidden="true"></i> Cite</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- GAC3D -->
+                    <article class="pub-card" data-category="journal" data-reveal>
+                        <div class="pub-media pub-media--mono" data-hue="3">
+                            <span class="pub-mono-name">GAC3D</span>
+                            <span class="pub-mono-venue">PeerJ CS</span>
+                        </div>
+                        <div class="publication-content pub-body">
+                            <div class="pub-tags">
+                                <span class="pub-badge pub-badge--journal">Journal</span>
+                                <span class="pub-venue">PeerJ Computer Science</span>
+                                <span class="pub-if">IF 3.8</span>
+                            </div>
+                            <h3 class="pub-title">GAC3D: improving monocular 3D object detection with ground-guide model and adaptive convolution</h3>
+                            <p class="pub-authors"><b>Minh-Quan Viet Bui*</b>, Duc Tuan Ngo*, Hoang-Anh Pham, Duc Dung Nguyen</p>
+                            <div class="publication-actions pub-actions">
+                                <a href="https://peerj.com/articles/cs-686/" class="pub-link" target="_blank" rel="noopener noreferrer"><i class="ph ph-file-pdf" aria-hidden="true"></i> PDF</a>
+                                <button type="button" class="pub-link cite-link" aria-expanded="false" data-citation="@article{Bui2021GAC3D,\n  author = {Bui, Minh-Quan Viet and Ngo, Duc Tuan and Pham, Hoang-Anh and Nguyen, Duc Dung},\n  title = {GAC3D: improving monocular 3D object detection with ground-guide model and adaptive convolution},\n  journal = {PeerJ Computer Science},\n  volume = {7},\n  pages = {e686},\n  year = {2021},\n  doi = {10.7717/peerj-cs.686},\n  url = {https://peerj.com/articles/cs-686/}\n}"><i class="ph ph-quotes" aria-hidden="true"></i> Cite</button>
+                            </div>
+                        </div>
+                    </article>
+
                 </div>
-                <div class="skills">
-                    <h3>Research Interests</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Computer Vision</span>
-                        <span class="skill-tag">2D/3D Reconstruction</span>
-                        <span class="skill-tag">Neural Rendering</span>
-                        <span class="skill-tag">Deep Learning</span>
-                        <span class="skill-tag">Computer Graphics</span>
+            </div>
+        </section>
+
+        <!-- ===================== CV ===================== -->
+        <section id="cv" class="cv-band">
+            <div class="wrap">
+              <div class="cv-inner" data-reveal>
+                <div class="cv-copy">
+                    <h2 class="cv-title">Curriculum Vitae</h2>
+                    <p class="cv-lead">
+                        The full record of my education, publications, and research experience in one PDF.
+                    </p>
+                    <p class="cv-meta"><i class="ph ph-clock-counter-clockwise" aria-hidden="true"></i> Updated June 2026</p>
+                </div>
+                <div class="cv-actions">
+                    <a href="assets/Minh-Quan_Viet_Bui_CV.pdf" class="btn btn-on-accent" download>
+                        <i class="ph ph-download-simple" aria-hidden="true"></i> Download CV (PDF)
+                    </a>
+                    <a href="assets/Minh-Quan_Viet_Bui_CV.pdf" class="btn btn-ghost-on-accent" target="_blank" rel="noopener noreferrer">
+                        <i class="ph ph-eye" aria-hidden="true"></i> View in browser
+                    </a>
+                </div>
+              </div>
+            </div>
+        </section>
+
+        <!-- ===================== CONTACT ===================== -->
+        <section id="contact" class="section contact">
+            <div class="wrap">
+                <header class="section-head" data-reveal>
+                    <h2 class="section-title">Get in touch</h2>
+                    <p class="section-lead">I'm currently open to postdoc, internship, and collaboration opportunities. Feel free to reach out.</p>
+                </header>
+
+                <div class="contact-grid">
+                    <a href="mailto:bvmquan@kaist.ac.kr" class="contact-card" data-reveal>
+                        <i class="ph ph-envelope-simple contact-icon" aria-hidden="true"></i>
+                        <span class="contact-label">Email</span>
+                        <span class="contact-value">bvmquan@kaist.ac.kr</span>
+                    </a>
+
+                    <div class="contact-card" data-reveal>
+                        <i class="ph ph-map-pin contact-icon" aria-hidden="true"></i>
+                        <span class="contact-label">Laboratory</span>
+                        <span class="contact-value">N24 Building, Room 1106<br>KAIST, Daejeon</span>
                     </div>
-                    <h3>Technical Skills</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Pytorch/Jax/Tensorflow</span>
-                        <span class="skill-tag">CUDA/C++</span>
+
+                    <div class="contact-card contact-card--social" data-reveal>
+                        <i class="ph ph-link contact-icon" aria-hidden="true"></i>
+                        <span class="contact-label">Elsewhere</span>
+                        <div class="social-row">
+                            <a href="https://scholar.google.com/citations?user=nNyPEwcAAAAJ&hl=vi" class="social-link" aria-label="Google Scholar" target="_blank" rel="noopener noreferrer"><i class="ph ph-graduation-cap" aria-hidden="true"></i></a>
+                            <a href="https://github.com/quan5609" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
+                            <a href="https://www.linkedin.com/in/viet-minh-quan-bui-09ab5620b/" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="ph ph-linkedin-logo" aria-hidden="true"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- <section id="research" class="section research">
-        <div class="container">
-            <h2 class="section-title">Research Projects</h2>
-            <div class="research-grid">
-                <div class="research-card">
-                    <div class="research-image">
-                        <img src="images/mobgs.png" alt="MoBGS">
-                        <div class="research-overlay">
-                            <a href="#" class="research-link">View Details</a>
-                        </div>
-                    </div>
-                    <div class="research-content">
-                        <h3>MoBGS: Motion Deblurring Dynamic 3D Gaussian Splatting for Blurry Monocular Video</h3>
-                        <p>Deblurring dynamic 3D Gaussian Splatting (3DGS) framework capable of reconstructing sharp and high-quality novel spatio-temporal views from blurry monocular videos in an end-to-end manner.</p>
-                        <div class="research-meta">
-                            <span class="research-year">arXiv 2025</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="research-card">
-                    <div class="research-image">
-                        <img src="images/splinegs.png" alt="SplineGS">
-                        <div class="research-overlay">
-                            <a href="https://kaist-viclab.github.io/splinegs-site" class="research-link">View Details</a>
-                        </div>
-                    </div>
-                    <div class="research-content">
-                        <h3>SplineGS: Robust Motion-Adaptive Spline for Real-Time Dynamic 3D Gaussians from Monocular Video</h3>
-                        <p>COLMAP-free dynamic 3D Gaussian Splatting (3DGS) framework for high-quality reconstruction and fast rendering from monocular videos.</p>
-                        <div class="research-meta">
-                            <span class="research-year">CVPR 2025</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="research-card">
-                    <div class="research-image">
-                        <img src="images/moblurf.png" alt="MoBluRF">
-                        <div class="research-overlay">
-                            <a href="https://kaist-viclab.github.io/moblurf-site/" class="research-link">View Details</a>
-                        </div>
-                    </div>
-                    <div class="research-content">
-                        <h3>MoBluRF: Motion Deblurring Neural Radiance Fields for Blurry Monocular Video</h3>
-                        <p>A novel motion deblurring NeRF framework for blurry monocular video, called MoBluRF.</p>
-                        <div class="research-meta">
-                            <span class="research-year">IEEE Transactions on Pattern Analysis and Machine Intelligence</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="research-card">
-                    <div class="research-image">
-                        <img src="images/pronerf.png" alt="ProNeRF">
-                        <div class="research-overlay">
-                            <a href="https://kaist-viclab.github.io/pronerf-site/" class="research-link">View Details</a>
-                        </div>
-                    </div>
-                    <div class="research-content">
-                        <h3>ProNeRF: Learning Efficient Projection-Aware Ray Sampling for Fine-Grained Implicit Neural Radiance Fields</h3>
-                        <p>A projection-aware neural radiance field model, referred to as ProNeRF, which provides an optimal trade-off between the memory footprint, speed, and quality.</p>
-                        <div class="research-meta">
-                            <span class="research-year">IEEE Access</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="research-card">
-                    <div class="research-image">
-                        <img src="images/transfer.jpg" alt="Transfer">
-                        <div class="research-overlay">
-                            <a href="https://www.sciencedirect.com/science/article/pii/S0262885623002457#f0005" class="research-link">View Details</a>
-                        </div>
-                    </div>
-                    <div class="research-content">
-                        <h3>Transfer multi-source knowledge via scale-aware online domain adaptation in depth estimation for autonomous driving</h3>
-                        <p>Online monocular depth adaptation model that aims to train an initial depth estimation model in a source domain and continuously adapt the model against a constantly changing target domain.</p>
-                        <div class="research-meta">
-                            <span class="research-year">Image and Vision Computing</span>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </section> -->
-
-    <section id="publications" class="section publications">
-        <div class="container">
-            <h2 class="section-title">Publications</h2>
-            <div class="publication-filters">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="conference">Conference Papers</button>
-                <button class="filter-btn" data-filter="journal">Journal Articles</button>
-                <button class="filter-btn" data-filter="workshop">Under Review</button>
-            </div>
-            <div class="publication-list">
-                <div class="publication-item" data-category="conference">
-                    <div class="publication-badge conference-badge">Conference</div>
-                    <div class="publication-content">
-                        <h3>AirSplat: Alignment and Rating for Robust Feed-Forward 3D Gaussian Splatting</h3>
-                        <p class="publication-authors"><b>Minh-Quan Viet Bui*</b>, Jaeho Moon*, Munchurl Kim</p>
-                        <p class="publication-meta"><b>ECCV 2026</b></p>
-                        <div class="publication-actions">
-                            <a href="https://arxiv.org/pdf/2603.25129" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> PDF</a>
-                            <a href="#" class="publication-link cite-link" data-citation="@InProceedings{bui2026airsplat,\n  author    = {Minh-Quan Viet Bui and Jaeho Moon and Munchurl Kim},\n  title     = {AirSplat: Alignment and Rating for Robust Feed-Forward 3D Gaussian Splatting},\n  booktitle = {ECCV},\n  year      = {2026}\n}"><i class="fas fa-quote-right"></i> Cite</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item" data-category="conference">
-                    <div class="publication-badge conference-badge">Conference</div>
-                    <div class="publication-content">
-                        <h3>EcoSplat: Efficiency-controllable Feed-forward 3D Gaussian Splatting from Multi-view Images</h3>
-                        <p class="publication-authors">Jongmin Park*, <b>Minh-Quan Viet Bui*</b>, Juan Luis Gonzalez Bello, Jaeho Moon, Jihyong Oh, Munchurl Kim</p>
-                        <p class="publication-meta"><b>CVPR 2026</b> <span class="paper-highlight-tag">Highlight</span></p>
-                        <div class="publication-actions">
-                            <a href="https://arxiv.org/pdf/2512.18692" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> PDF</a>
-                            <a href="#" class="publication-link cite-link" data-citation="@InProceedings{park2026ecosplat,\n  author    = {Jongmin Park and Minh-Quan Viet Bui and Juan Luis Gonzalez Bello and Jaeho Moon and Jihyong Oh and Munchurl Kim},\n  title     = {EcoSplat: Efficiency-controllable Feed-forward 3D Gaussian Splatting from Multi-view Images},\n  booktitle = {Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR)},\n  year      = {2026}\n}"><i class="fas fa-quote-right"></i> Cite</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item" data-category="conference">
-                    <div class="publication-badge conference-badge">Conference</div>
-                    <div class="publication-content">
-                        <h3>MoBGS: Motion Deblurring Dynamic 3D Gaussian Splatting for Blurry Monocular Video</h3>
-                        <p class="publication-authors"><b>Minh-Quan Viet Bui*</b>, Jongmin Park*, Juan Luis Gonzalez Bello, Jaeho Moon, Jihyong Oh, Munchurl Kim</p>
-                        <p class="publication-meta"><b>AAAI 2026</b></p>
-                        <div class="publication-actions">
-                            <a href="https://arxiv.org/pdf/2504.15122" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> PDF</a>
-                            <a href="#" class="publication-link cite-link" data-citation="@InProceedings{bui2025mobgsmotiondeblurringdynamic,\n  title={MoBGS: Motion Deblurring Dynamic 3D Gaussian Splatting for Blurry Monocular Video},\n  author={Minh-Quan Viet Bui and Jongmin Park and Juan Luis Gonzalez Bello and Jaeho Moon and Jihyong Oh and Munchurl Kim},\n  year={2026},\n  booktitle = {AAAI}\n}"><i class="fas fa-quote-right"></i> Cite</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item" data-category="conference">
-                    <div class="publication-badge conference-badge">Conference</div>
-                    <div class="publication-content">
-                        <h3>SplineGS: Robust Motion-Adaptive Spline for Real-Time Dynamic 3D Gaussians from Monocular Video</h3>
-                        <p class="publication-authors">Jongmin Park*, <b>Minh-Quan Viet Bui*</b>, Juan Luis Gonzalez Bello, Jaeho Moon, Jihyong Oh, Munchurl Kim</p>
-                        <p class="publication-meta"><b>CVPR 2025</b></p>
-                        <div class="publication-actions">
-                            <a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Park_SplineGS_Robust_Motion-Adaptive_Spline_for_Real-Time_Dynamic_3D_Gaussians_from_CVPR_2025_paper.pdf" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> PDF</a>
-                            <a href="#" class="publication-link cite-link" data-citation="@InProceedings{Park_2025_CVPR,\n  author    = {Park, Jongmin and Bui, Minh-Quan Viet and Bello, Juan Luis Gonzalez and Moon, Jaeho and Oh, Jihyong and Kim, Munchurl},\n  title     = {SplineGS: Robust Motion-Adaptive Spline for Real-Time Dynamic 3D Gaussians from Monocular Video},\n  booktitle = {Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR)},\n  month     = {June},\n  year      = {2025},\n  pages     = {26866-26875}\n}"><i class="fas fa-quote-right"></i> Cite</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item" data-category="journal">
-                    <div class="publication-badge journal-badge">Journal</div>
-                    <div class="publication-content">
-                        <h3>MoBluRF: Motion Deblurring Neural Radiance Fields for Blurry Monocular Video</h3>
-                        <p class="publication-authors"><b>Minh-Quan Viet Bui*</b>, Jongmin Park*, Juan Luis Gonzalez Bello, Jaeho Moon, Jihyong Oh, Munchurl Kim</p>
-                        <p class="publication-meta"><b>IEEE Transactions on Pattern Analysis and Machine Intelligence</b> <b style="color: red;">(Impact Factor: 20.8)</b></p>
-                        <div class="publication-actions">
-                            <a href="https://ieeexplore.ieee.org/document/11017407" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> PDF</a>
-                            <a href="#" class="publication-link cite-link" data-citation="@ARTICLE{11017407,\n  author={Bui, Minh-Quan Viet and Park, Jongmin and Oh, Jihyong and Kim, Munchurl},\n  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},\n  title={MoBluRF: Motion Deblurring Neural Radiance Fields for Blurry Monocular Video},\n  year={2025},\n  volume={},\n  number={},\n  pages={1-18},\n  doi={10.1109/TPAMI.2025.3574644}\n}"><i class="fas fa-quote-right"></i> Cite</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item" data-category="journal">
-                    <div class="publication-badge journal-badge">Journal</div>
-                    <div class="publication-content">
-                        <h3>ProNeRF: Learning Efficient Projection-Aware Ray Sampling for Fine-Grained Implicit Neural Radiance Fields</h3>
-                        <p class="publication-authors">Juan Luis Gonzalez Bello*, <b>Minh-Quan Viet Bui*</b>, Munchurl Kim</p>
-                        <p class="publication-meta">IEEE Access (<b>Impact Factor: 3.4</b>)</p>
-                        <div class="publication-actions">
-                            <a href="https://ieeexplore.ieee.org/document/10504815" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> PDF</a>
-                            <a href="#" class="publication-link cite-link" data-citation="@ARTICLE{10504815,\n  author={Bello, Juan Luis Gonzalez and Bui, Minh-Quan Viet and Kim, Munchurl},\n  journal={IEEE Access},\n  title={ProNeRF: Learning Efficient Projection-Aware Ray Sampling for Fine-Grained Implicit Neural Radiance Fields},\n  year={2024},\n  volume={12},\n  number={},\n  pages={56799-56814},\n  doi={10.1109/ACCESS.2024.3390753}\n}"><i class="fas fa-quote-right"></i> Cite</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item" data-category="journal">
-                    <div class="publication-badge journal-badge">Journal</div>
-                    <div class="publication-content">
-                        <h3>Transfer multi-source knowledge via scale-aware online domain adaptation in depth estimation for autonomous driving</h3>
-                        <p class="publication-authors">Phan Thi Huyen Thanh*, <b>Minh-Quan Viet Bui*</b>, Duc Dung Nguyen, Tran Vu Pham, Truong Vinh Truong Duy, Natori Naotake</p>
-                        <p class="publication-meta">Image and Vision Computing (<b>Impact Factor: 4.2</b>)</p>
-                        <div class="publication-actions">
-                            <a href="https://www.sciencedirect.com/science/article/pii/S0262885623002457" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> PDF</a>
-                            <a href="#" class="publication-link cite-link" data-citation="@article{THANH2024104871,\n  title = {Transfer multi-source knowledge via scale-aware online domain adaptation in depth estimation for autonomous driving},\n  journal = {Image and Vision Computing},\n  volume = {141},\n  pages = {104871},\n  year = {2024},\n  issn = {0262-8856},\n  doi = {https://doi.org/10.1016/j.imavis.2023.104871},\n  url = {https://www.sciencedirect.com/science/article/pii/S0262885623002457},\n  author = {Phan Thi Huyen Thanh and Minh Quan Viet Bui and Duc Dung Nguyen and Tran Vu Pham and Truong Vinh Truong Duy and Natori Naotake}\n}"><i class="fas fa-quote-right"></i> Cite</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item" data-category="journal">
-                    <div class="publication-badge journal-badge">Journal</div>
-                    <div class="publication-content">
-                        <h3>eGAC3D: enhancing depth adaptive convolution and depth estimation for monocular 3D object pose detection</h3>
-                        <p class="publication-authors">Duc Tuan Ngo*, <b>Minh-Quan Viet Bui*</b>, Duc Dung Nguyen, Hoang-Anh Pham</p>
-                        <p class="publication-meta">PeerJ Computer Science (<b>Impact Factor: 3.8</b>)</p>
-                        <div class="publication-actions">
-                            <a href="https://peerj.com/articles/cs-1144/" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> PDF</a>
-                            <a href="#" class="publication-link cite-link" data-citation="@article{Ngo2022eGAC3D,\n  author = {Ngo, Duc Tuan and Bui, Minh-Quan Viet and Nguyen, Duc Dung and Pham, Hoang-Anh},\n  title = {eGAC3D: enhancing depth adaptive convolution and depth estimation for monocular 3D object pose detection},\n  journal = {PeerJ Computer Science},\n  volume = {8},\n  pages = {e1144},\n  year = {2022},\n  doi = {10.7717/peerj-cs.1144},\n  url = {https://peerj.com/articles/cs-1144/}\n}"><i class="fas fa-quote-right"></i> Cite</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item" data-category="journal">
-                    <div class="publication-badge journal-badge">Journal</div>
-                    <div class="publication-content">
-                        <h3>GAC3D: improving monocular 3D object detection with ground-guide model and adaptive convolution</h3>
-                        <p class="publication-authors"><b>Minh-Quan Viet Bui*</b>, Duc Tuan Ngo*, Hoang-Anh Pham, Duc Dung Nguyen</p>
-                        <p class="publication-meta">PeerJ Computer Science (<b>Impact Factor: 3.8</b>)</p>
-                        <div class="publication-actions">
-                            <a href="https://peerj.com/articles/cs-686/" class="publication-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> PDF</a>
-                            <a href="#" class="publication-link cite-link" data-citation="@article{Bui2021GAC3D,\n  author = {Bui, Minh-Quan Viet and Ngo, Duc Tuan and Pham, Hoang-Anh and Nguyen, Duc Dung},\n  title = {GAC3D: improving monocular 3D object detection with ground-guide model and adaptive convolution},\n  journal = {PeerJ Computer Science},\n  volume = {7},\n  pages = {e686},\n  year = {2021},\n  doi = {10.7717/peerj-cs.686},\n  url = {https://peerj.com/articles/cs-686/}\n}"><i class="fas fa-quote-right"></i> Cite</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="publication-more">
-                <button class="btn btn-secondary" id="load-more-pubs">Load More Publications</button>
-            </div> -->
-        </div>
-    </section>
-
-    <section id="contact" class="section contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <i class="fas fa-envelope"></i>
-                        <h3>Email</h3>
-                        <p>bvmquan@kaist.ac.kr</p>
-                        <div class="social-links">
-                            <a href="https://scholar.google.com/citations?user=nNyPEwcAAAAJ&hl=vi" class="social-link"><i class="fab fa-google"></i></a>
-                            <a href="https://github.com/quan5609" class="social-link"><i class="fab fa-github"></i></a>
-                            <a href="https://www.linkedin.com/in/viet-minh-quan-bui-09ab5620b/" class="social-link"><i class="fab fa-linkedin"></i></a>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <h3>Laboratory</h3>
-                        <p>N24 Building<br>Room 1106<br>KAIST</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <p>Feel free to use this website's <a style="color:aliceblue" href="https://github.com/quan5609/quan5609.github.io">source code</a>.</p>
+    <footer class="site-footer">
+        <div class="wrap footer-inner">
+            <span class="footer-name">Minh-Quan Viet Bui</span>
+            <p class="footer-note">
+                Built from open
+                <a href="https://github.com/quan5609/quan5609.github.io">source code</a>.
+            </p>
         </div>
     </footer>
+
+    <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+        <i class="ph ph-arrow-up" aria-hidden="true"></i>
+    </button>
+
     <script src="scripts/main.js"></script>
 </body>
 </html>

@@ -1,203 +1,216 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // Mobile menu toggle
-  const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
-  const nav = document.querySelector(".nav");
+/* =====================================================================
+   Minh-Quan Viet Bui - portfolio interactions (vanilla JS, no deps)
+   - theme toggle (persisted)
+   - mobile menu
+   - header + back-to-top state via IntersectionObserver (no scroll listener)
+   - scroll-reveal with per-group stagger
+   - active nav link tracking
+   - publication filtering
+   - BibTeX cite expand/collapse
+   ===================================================================== */
+(function () {
+  "use strict";
 
-  mobileMenuBtn.addEventListener("click", function () {
-    nav.classList.toggle("active");
-    this.querySelector("i").classList.toggle("fa-times");
-    this.querySelector("i").classList.toggle("fa-bars");
-  });
+  const root = document.documentElement;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Smooth scrolling for navigation links
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
+  /* --------------------------- Theme toggle --------------------------- */
+  const themeColorMeta = document.getElementById("theme-color-meta");
+  function syncThemeColor() {
+    if (!themeColorMeta) return;
+    const bg = getComputedStyle(root).getPropertyValue("--bg").trim();
+    if (bg) themeColorMeta.setAttribute("content", bg);
+  }
+  syncThemeColor();
 
-      const targetId = this.getAttribute("href");
-      const targetElement = document.querySelector(targetId);
+  const themeToggle = document.getElementById("theme-toggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) { /* ignore */ }
+      syncThemeColor();
+    });
+  }
 
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 80,
-          behavior: "smooth",
-        });
+  /* --------------------------- Mobile menu ---------------------------- */
+  const menuToggle = document.getElementById("menu-toggle");
+  const nav = document.getElementById("nav");
 
-        // Close mobile menu if open
-        if (nav.classList.contains("active")) {
-          nav.classList.remove("active");
-          mobileMenuBtn.querySelector("i").classList.remove("fa-times");
-          mobileMenuBtn.querySelector("i").classList.add("fa-bars");
-        }
+  function closeMenu() {
+    if (!nav) return;
+    nav.classList.remove("open");
+    if (menuToggle) {
+      menuToggle.setAttribute("aria-expanded", "false");
+      const icon = menuToggle.querySelector("i");
+      if (icon) { icon.className = "ph ph-list"; }
+    }
+  }
+
+  if (menuToggle && nav) {
+    menuToggle.addEventListener("click", () => {
+      const open = nav.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+      const icon = menuToggle.querySelector("i");
+      if (icon) { icon.className = open ? "ph ph-x" : "ph ph-list"; }
+      if (open) {
+        // Defer one frame: the nav transitions from visibility:hidden,
+        // so it is not focusable on the same tick the class is added.
+        const first = nav.querySelector("a");
+        if (first) requestAnimationFrame(() => first.focus());
       }
     });
+
+    // Escape closes the open menu and returns focus to the toggle.
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && nav.classList.contains("open")) {
+        closeMenu();
+        menuToggle.focus();
+      }
+    });
+  }
+
+  // Close the mobile menu after following an in-page link.
+  document.querySelectorAll('.nav-list a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", closeMenu);
   });
 
-  // Header scroll effect
-  const header = document.querySelector(".header");
+  /* ---------- Header + back-to-top state (sentinel observer) ---------- */
+  const header = document.getElementById("site-header");
+  const toTop = document.getElementById("to-top");
+  const sentinel = document.getElementById("top-sentinel");
 
-  window.addEventListener("scroll", function () {
-    if (window.scrollY > 100) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-  });
+  if (sentinel && "IntersectionObserver" in window) {
+    const headerObserver = new IntersectionObserver(
+      ([entry]) => {
+        const scrolled = !entry.isIntersecting;
+        if (header) header.classList.toggle("scrolled", scrolled);
+        if (toTop) toTop.classList.toggle("show", scrolled);
+      },
+      { rootMargin: "0px" }
+    );
+    headerObserver.observe(sentinel);
+  }
 
-  // Publication filtering
-  const filterBtns = document.querySelectorAll(".filter-btn");
-  const publicationItems = document.querySelectorAll(".publication-item");
+  if (toTop) {
+    toTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    });
+  }
+
+  /* --------------------------- Scroll reveal -------------------------- */
+  const reveals = Array.from(document.querySelectorAll("[data-reveal]"));
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    reveals.forEach((el) => el.classList.add("is-visible"));
+  } else {
+    // Cascade reveals that share a parent container.
+    const groups = new Map();
+    reveals.forEach((el) => {
+      const parent = el.parentElement;
+      const list = groups.get(parent) || [];
+      list.push(el);
+      groups.set(parent, list);
+    });
+    groups.forEach((list) => {
+      list.forEach((el, i) => {
+        el.style.transitionDelay = Math.min(i, 6) * 70 + "ms";
+      });
+    });
+
+    const revealObserver = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+    );
+    reveals.forEach((el) => revealObserver.observe(el));
+  }
+
+  /* ------------------------ Active nav tracking ----------------------- */
+  const navLinks = Array.from(document.querySelectorAll('.nav-list a[href^="#"]'));
+  const sections = navLinks
+    .map((l) => document.querySelector(l.getAttribute("href")))
+    .filter(Boolean);
+
+  if (sections.length && "IntersectionObserver" in window) {
+    const navObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach((l) =>
+              l.classList.toggle("active", l.getAttribute("href") === "#" + id)
+            );
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((s) => navObserver.observe(s));
+  }
+
+  /* ------------------------ Publication filter ------------------------ */
+  const filterBtns = Array.from(document.querySelectorAll(".filter-btn"));
+  const pubCards = Array.from(document.querySelectorAll(".pub-card"));
 
   filterBtns.forEach((btn) => {
     btn.addEventListener("click", function () {
-      // Remove active class from all buttons
-      filterBtns.forEach((b) => b.classList.remove("active"));
-
-      // Add active class to clicked button
-      this.classList.add("active");
-
+      filterBtns.forEach((b) => {
+        b.classList.toggle("active", b === this);
+        b.setAttribute("aria-pressed", String(b === this));
+      });
       const filter = this.getAttribute("data-filter");
 
-      publicationItems.forEach((item) => {
-        if (filter === "all" || item.getAttribute("data-category") === filter) {
-          item.style.display = "block"; // Ensure item is visible
-          setTimeout(() => {
-            item.classList.remove("hidden"); // Trigger fade-in transition
-          }, 10); // Slight delay to ensure display is applied
-        } else {
-          item.classList.add("hidden"); // Trigger fade-out transition
-          setTimeout(() => {
-            item.style.display = "none"; // Set display to none after transition
-          }, 300); // Match the CSS transition duration
-        }
+      pubCards.forEach((card) => {
+        const match = filter === "all" || card.getAttribute("data-category") === filter;
+        card.classList.toggle("is-hidden", !match);
       });
     });
   });
 
-  // Animate skill bars on scroll
-  const skillBars = document.querySelectorAll(".bar");
-
-  function animateSkillBars() {
-    skillBars.forEach((bar) => {
-      const width = bar.style.width;
-      bar.style.width = "0";
-
-      setTimeout(() => {
-        bar.style.width = width;
-      }, 100);
-    });
-  }
-
-  // Intersection Observer for skill bars
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animateSkillBars();
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
-
-  const skillsSection = document.querySelector(".about");
-  if (skillsSection) {
-    observer.observe(skillsSection);
-  }
-
-  // // Load more publications
-  // const loadMoreBtn = document.getElementById("load-more-pubs");
-  // if (loadMoreBtn) {
-  //   loadMoreBtn.addEventListener("click", function () {
-  //     // In a real implementation, this would fetch more publications from an API
-  //     // For demo purposes, we'll just show an alert
-  //     alert(
-  //       "In a real implementation, this would load more publications dynamically."
-  //     );
-  //   });
-  // }
-
-  // // Form submission
-  // const contactForm = document.querySelector(".contact-form");
-  // if (contactForm) {
-  //   contactForm.addEventListener("submit", function (e) {
-  //     e.preventDefault();
-
-  //     // In a real implementation, this would send the form data to a server
-  //     alert(
-  //       "Thank you for your message! In a real implementation, this would be sent to a server."
-  //     );
-  //     this.reset();
-  //   });
-  // }
-});
-
-// document.addEventListener("DOMContentLoaded", function () {
-//   const publications = document.querySelectorAll(".publication-item");
-//   const loadMoreButton = document.getElementById("load-more-pubs");
-//   const maxVisible = 4;
-
-//   // Initially hide publications beyond the first 4
-//   if (publications.length > maxVisible) {
-//     publications.forEach((pub, index) => {
-//       if (index >= maxVisible) {
-//         pub.style.display = "none";
-//       }
-//     });
-//     loadMoreButton.style.display = "block"; // Show the "Load More" button
-//   }
-
-//   // Add click event to load more publications
-//   loadMoreButton.addEventListener("click", function () {
-//     publications.forEach((pub) => {
-//       pub.style.display = "block"; // Show all publications
-//     });
-//     loadMoreButton.style.display = "none"; // Hide the button after loading
-//   });
-// });
-
-document.addEventListener("DOMContentLoaded", () => {
-  const citeLinks = document.querySelectorAll(".cite-link");
-
-  citeLinks.forEach((citeLink) => {
+  /* ----------------------- BibTeX cite expand ------------------------- */
+  document.querySelectorAll(".cite-link").forEach((citeLink) => {
     citeLink.addEventListener("click", (e) => {
       e.preventDefault();
 
-      // Get the citation text from the data attribute
-      const citationText = citeLink.getAttribute("data-citation");
+      const container = citeLink.closest(".publication-content");
+      if (!container) return;
 
-      // Check if the citation is already displayed
-      const existingCitation = citeLink
-        .closest(".publication-content")
-        .querySelector(".citation-text");
-      if (existingCitation) {
-        existingCitation.remove(); // Remove the citation if it already exists
+      // Toggle off if already open.
+      const existing = container.querySelector(".citation-text");
+      if (existing) {
+        existing.remove();
+        citeLink.setAttribute("aria-expanded", "false");
         return;
       }
 
-      // Create a new citation element
-      const citationElement = document.createElement("pre");
-      citationElement.className = "citation-text";
+      const citationText = citeLink.getAttribute("data-citation") || "";
+      const pre = document.createElement("pre");
+      pre.className = "citation-text";
+      pre.setAttribute("aria-label", "BibTeX citation");
+      pre.setAttribute("role", "region");
 
-      // Wrap each line of the citation text in a <code> element
-      const lines = citationText.split("\\n"); // Split the text by \n
-      lines.forEach((line, index) => {
-        const codeElement = document.createElement("code");
-        codeElement.textContent = line; // Set the text content for each line
-        codeElement.style.opacity = "0"; // Initially hidden
-        codeElement.style.transition = "opacity 0.1s ease"; // Much faster transition
-        citationElement.appendChild(codeElement);
-        citationElement.appendChild(document.createElement("br")); // Add a line break
-
-        // Gradually show each line with a reduced delay
-        setTimeout(() => {
-          codeElement.style.opacity = "1"; // Make the line visible
-        }, index * 50); // Much faster appearance
+      // data-citation stores lines joined by a literal "\n".
+      citationText.split("\\n").forEach((line, index) => {
+        const code = document.createElement("code");
+        code.textContent = line;
+        if (!reduceMotion) {
+          code.style.opacity = "0";
+          code.style.transition = "opacity .12s ease";
+          setTimeout(() => { code.style.opacity = "1"; }, index * 40);
+        }
+        pre.appendChild(code);
+        pre.appendChild(document.createElement("br"));
       });
 
-      // Insert the citation element below the publication actions
-      citeLink.closest(".publication-content").appendChild(citationElement);
+      container.appendChild(pre);
+      citeLink.setAttribute("aria-expanded", "true");
     });
   });
-});
+})();
